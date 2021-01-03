@@ -1,0 +1,38 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: OTP ${{matrix.otp_version}} / Elixir ${{matrix.elixir}}
+    strategy:
+      matrix:
+        otp_version: ['23.0.2', '22.3.4.2', '21.3.8.16']
+        elixir: ['1.10.4', '1.11.2']
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-elixir@v1
+        with:
+          otp-version: ${{matrix.otp_version}}
+          elixir-version: ${{matrix.elixir}}
+      - run: mix deps.get
+      - uses: actions/cache@v1
+        with:
+          path: _build
+          key: build-${{ hashFiles('mix.lock') }}
+      - uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock', matrix.otp_version, matrix.elixir)) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+      - run: mix test
+      - run: mix format --check-formatted
+      - run: mix dialyzer
