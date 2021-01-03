@@ -47,5 +47,26 @@ children = [
 ```
 See the [docs](https://hexdocs.pm/uplink) for more information.
 
+## Uplink Monitors
+
+Monitors by the community, for the community!
+
+## Usage
+
+Uplink Monitors are meant to be copied and pasted into your project as a starting point because 
+preferences amongst individuals and organizations around metrics can vary widely. The important
+thing is to have a jumping-off point and can learn patterns and practices from others. These
+aren't one-size-fits-all, so make them your own and share your learnings with others!
+
+In the [monitors](https://github.com/elixir-uplink/monitors) folder you'll find monitors for popular
+libraries which have been compiled over the past few years. They've worked quite well, so
+enjoy!
+
+Create a PR to add a link to your own examples in the README or a monitor for a library
+not already covered.
+
+### Community Links
+
+
 
 Copyright (c) 2021 Bryan Naegele

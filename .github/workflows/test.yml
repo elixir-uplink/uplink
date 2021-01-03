@@ -35,4 +35,5 @@ jobs:
             ${{ runner.os }}-mix-
       - run: mix test
       - run: mix format --check-formatted
+      - run: mix format --check-formatted "monitors/**/*.ex"
       - run: mix dialyzer
