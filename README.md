@@ -1,6 +1,6 @@
 [![EEF Observability WG project](https://img.shields.io/badge/EEF-Observability-black)](https://github.com/erlef/eef-observability-wg)
 [![Hex.pm](https://img.shields.io/hexpm/v/uplink)](https://hex.pm/packages/uplink)
-![Build Status](https://github.com/elixir-uplink/uplink/workflows/Test/badge.svg)
+![Build Status](https://github.com/elixir-uplink/uplink/workflows/Tests/badge.svg)
 
 # Uplink
 
