@@ -87,19 +87,19 @@ defmodule Uplink do
   @type reporter_specs :: [reporter_spec()]
 
   @type option ::
-          {:metrics, metric_definitions()}
+          {:metric_definitions, metric_definitions()}
           | {:monitors, monitors()}
-          | {:pollers, poller_specs()}
+          | {:poller_specs, poller_specs()}
           | {:reporters, reporter_specs()}
 
   @typedoc """
   Valid options. No options are required but a monitor and/or monitor are the
   minimum required to do anything.
 
-  * `:metrics` - a list of additional `t:Telemetry.Metrics.t/0` definitions not
+  * `:metric_definitions` - a list of additional `t:Telemetry.Metrics.t/0` definitions not
   exposed by monitors.
   * `:monitors` - a list of `t:monitor/0` to use.
-  * `:pollers` - a list of additoinal `t:poller_spec/0` not exposed by monitors.
+  * `:poller_specs` - a list of additoinal `t:poller_spec/0` not exposed by monitors.
   * `:reporters` - a list of `Telemetry.Metrics` reporters, usually 0 or 1.
   """
   @type options :: [option()]

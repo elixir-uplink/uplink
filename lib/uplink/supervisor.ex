@@ -43,7 +43,7 @@ defmodule Uplink.Supervisor do
   defp init_monitors(monitors) do
     status =
       Enum.reduce(monitors, [], fn
-        {monitor, args}, results -> [apply(monitor, :init, args) | results]
+        {monitor, args}, results -> [apply(monitor, :init, [args]) | results]
         monitor, results -> [apply(monitor, :init, [[]]) | results]
       end)
       |> Enum.all?(&(&1 == :ok))
@@ -61,14 +61,14 @@ defmodule Uplink.Supervisor do
 
   defp metric_definitions(monitors) do
     Enum.reduce(monitors, [], fn
-      {monitor, args}, defs -> apply(monitor, :metric_definitions, args) ++ defs
+      {monitor, args}, defs -> apply(monitor, :metric_definitions, [args]) ++ defs
       monitor, defs -> apply(monitor, :metric_definitions, [[]]) ++ defs
     end)
   end
 
   defp monitor_pollers(monitors) do
     Enum.map(monitors, fn
-      {monitor, args} -> apply(monitor, :poller_specs, args)
+      {monitor, args} -> apply(monitor, :poller_specs, [args])
       monitor -> apply(monitor, :poller_specs, [[]])
     end)
     |> List.flatten()

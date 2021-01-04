@@ -43,7 +43,7 @@ defmodule Uplink.Monitors.VM do
   import Telemetry.Metrics, only: [counter: 2, last_value: 2]
 
   @impl true
-  def init(_opts), do: :ok
+  def init(_opts \\ []), do: :ok
 
   @impl true
   def poller_specs(opts \\ []) do
@@ -93,7 +93,7 @@ defmodule Uplink.Monitors.VM do
   end
 
   @impl true
-  def metric_definitions(_opts) do
+  def metric_definitions(_opts \\ []) do
     [
       counter("erlang.vm.context_switches.total",
         event_name: [:vm, :stats],

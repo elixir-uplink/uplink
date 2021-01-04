@@ -22,7 +22,7 @@ defmodule UplinkTest do
       Uplink,
       [
         monitors: [
-          {Uplink.Monitors.VM, [[poller_interval: 10]]}
+          {Uplink.Monitors.VM, [poller_interval: 10]}
         ],
         reporters: [
           {Telemetry.Metrics.ConsoleReporter, [device: device]}
