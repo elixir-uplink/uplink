@@ -29,7 +29,7 @@ children = [
   {
     Uplink, [
       monitors: [
-        {MyMonitors.Ecto, [:my_repo]},
+        {MyMonitors.Ecto, [repo_prefix: :my_repo]},
         Uplink.Monitors.VM
       ],
       pollers: [
