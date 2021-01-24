@@ -1,6 +1,6 @@
 # OrgUplink
 
-**TODO: Add description**
+Example of using Uplink as the basis for a shared library in an organization. This pattern enables standard conventions for a variety of libraries across an organization, simplifying instrumentation of applications for developers and SREs alike.
 
 ## Installation
 
