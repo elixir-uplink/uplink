@@ -26,7 +26,7 @@ defmodule Uplink.MixProject do
   defp docs do
     [
       main: "Uplink",
-      source_url: "https://github.com/elixir-uplink/uplink/tree/master/uplink",
+      source_url: "https://github.com/elixir-uplink/uplink",
       source_ref: "v#{@version}",
       extras: [
         "README.md"
@@ -49,7 +49,7 @@ defmodule Uplink.MixProject do
       maintainers: ["Bryan Naegele"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/elixir-uplink/uplink/tree/main/uplink"
+        "GitHub" => "https://github.com/elixir-uplink/uplink"
       }
     ]
   end
