@@ -20,26 +20,28 @@ defmodule Uplink do
 
   ## Usage
 
-    # application supervisor
-    children = [
-      {
-        Uplink, [
-          monitors: [
-            {MyMonitors.Ecto, [:my_repo]},
-            Uplink.Monitors.VM
-          ],
-          pollers: [
-            {10, [{TestModule, :test_emitter, []}]}
-          ],
-          metric_definitions: [
-            Telemetry.Metrics.counter("poller.test.event.lasers")
-          ],
-          reporters: [
-            Telemetry.Metrics.ConsoleReporter
-          ]
+  ```
+  # application supervisor
+  children = [
+    {
+      Uplink, [
+        monitors: [
+          {MyMonitors.Ecto, [:my_repo]},
+          Uplink.Monitors.VM
+        ],
+        pollers: [
+          {10, [{TestModule, :test_emitter, []}]}
+        ],
+        metric_definitions: [
+          Telemetry.Metrics.counter("poller.test.event.lasers")
+        ],
+        reporters: [
+          Telemetry.Metrics.ConsoleReporter
         ]
-      }
-    ]
+      ]
+    }
+  ]
+  ```
   """
 
   @typedoc """
