@@ -1,4 +1,4 @@
-if Code.ensure_loaded?(OpentelemetryEcto) do
+if Code.ensure_loaded?(OpentelemetryPhoenix) do
   defmodule Uplink.Monitors.OtelPhoenix do
     use Uplink.Monitor
 
