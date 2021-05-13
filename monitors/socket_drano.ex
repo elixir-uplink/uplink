@@ -16,7 +16,7 @@ if Code.ensure_loaded?(SocketDrano) do
     import Telemetry.Metrics, only: [last_value: 2]
 
     @impl true
-    def poller_specs(_opts) do
+    def poller_specs(_opts \\ []) do
       [
         {:timer.seconds(5),
          [
@@ -36,7 +36,7 @@ if Code.ensure_loaded?(SocketDrano) do
     end
 
     @impl true
-    def metric_definitions(_opts) do
+    def metric_definitions(_opts \\ []) do
       [
         last_value("phoenix.sockets.count",
           event_name: [:socket_drano, :stats],
