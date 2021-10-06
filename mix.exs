@@ -57,12 +57,12 @@ defmodule Uplink.MixProject do
 
   defp deps do
     [
-      {:dialyxir, "~> 1.0.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.23", only: [:dev, :docs]},
-      {:telemetry, "~> 0.4"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.5"},
-      {:telemetry_registry, "~> 0.2"}
+      {:dialyxir, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.25", only: [:dev, :docs]},
+      {:telemetry, "~> 1.0"},
+      {:telemetry_metrics, "~> 0.6.1"},
+      {:telemetry_poller, "~> 1.0"},
+      {:telemetry_registry, "~> 0.3"}
     ]
   end
 end
