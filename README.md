@@ -13,7 +13,7 @@ configurable drop-in to your application tree.
 ```elixir
 def deps do
   [
-    {:uplink, "~> 0.1"}
+    {:uplink, "~> 0.2"}
   ]
 end
 ```
