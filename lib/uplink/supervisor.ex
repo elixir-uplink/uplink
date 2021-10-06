@@ -78,7 +78,9 @@ defmodule Uplink.Supervisor do
   defp poller_specs(pollers) do
     Enum.map(pollers, fn {period, measurements} ->
       {:telemetry_poller,
-       period: period, measurements: measurements, name: :"#{System.system_time()}"}
+       period: period,
+       measurements: measurements,
+       name: :"#{for _ <- 1..16, into: "", do: <<Enum.random('0123456789abcdef')>>}"}
     end)
   end
 end
