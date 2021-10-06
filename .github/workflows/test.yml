@@ -9,68 +9,65 @@ on:
       - 'main'
 
 jobs:
+  test-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read file
+        id: set-matrix
+        run: |
+          matrixStringifiedObject="{\"otp_version\":[\"24.0.6\",\"23.3.4.7\",\"22.3.4.21\"],\"elixir_version\":[\"1.12.3\",\"1.11.4\"],\"rebar3_version\":[\"3.16.1\"],\"os\":[\"ubuntu-18.04\"],\"include\":[{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.10.4\",\"rebar3_version\":\"3.15.2\"},{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.11.4\",\"rebar3_version\":\"3.15.2\"}],\"exclude\":[{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.12.3\"}]}"
+          echo "::set-output name=matrix::$matrixStringifiedObject"
   format:
+    needs: test-matrix
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: '23.1'
-          elixir-version: '1.11.2'
+          otp-version: '24.1'
+          elixir-version: '1.12.3'
       - run: mix format --check-formatted
       - run: mix format --check-formatted "monitors/**/*.ex"
       - run: mix format --check-formatted "examples/**/*.ex"
 
   test:
+    needs: test-matrix
     runs-on: ubuntu-latest
-    name: OTP ${{matrix.otp_version}} / Elixir ${{matrix.elixir}}
+    name: OTP ${{matrix.otp_version}} / Elixir ${{matrix.elixir_version}}
     strategy:
-      matrix:
-        otp_version: ['23.1', '22.3.4.2', '21.3.8.16']
-        elixir: ['1.10.4', '1.11.2']
+      fail-fast: false
+      matrix: ${{ fromJson(needs.test-matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
+      - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp_version}}
-          elixir-version: ${{matrix.elixir}}
-      - uses: actions/cache@v1
-        with:
-          path: _build
-          key: build-${{ hashFiles('mix.lock') }}
-      - uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock', matrix.otp_version, matrix.elixir)) }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
+          elixir-version: ${{matrix.elixir_version}}
+          rebar3-version: ${{ matrix.rebar3_version }}
       - run: mix deps.get
         name: Deps
       - run: mix test
       - run: mix dialyzer
 
   test-examples:
+    needs: test-matrix
     runs-on: ubuntu-latest
-    name: OTP ${{matrix.otp_version}} / Elixir ${{matrix.elixir}}
+    defaults:
+      run:
+        working-directory: examples/org_uplink
+    name: Examples - OTP ${{matrix.otp_version}} / Elixir ${{matrix.elixir_version}}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.test-matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: '23.1'
-          elixir-version: '1.11.2'
+          otp-version: ${{matrix.otp_version}}
+          elixir-version: ${{matrix.elixir_version}}
+          rebar3-version: ${{ matrix.rebar3_version }}
       - run: mix deps.get
-        working-directory: examples/org_uplink
-      - uses: actions/cache@v1
-        with:
-          path: examples/org_uplink/_build
-          key: build-${{ hashFiles('mix.lock') }}
-      - uses: actions/cache@v2
-        with:
-          path: examples/org_uplink/deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock', matrix.otp_version, matrix.elixir)) }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
-      - run: mix deps.get
-        name: Deps
       - run: mix test
-      - run: mix dialyzer

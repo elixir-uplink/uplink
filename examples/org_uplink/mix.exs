@@ -5,7 +5,7 @@ defmodule OrgUplink.MixProject do
     [
       app: :org_uplink,
       version: "0.1.0",
-      elixir: "~> 1.11",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -22,9 +22,9 @@ defmodule OrgUplink.MixProject do
   defp deps do
     [
       {:uplink, path: "../../../uplink"},
-      {:telemetry_metrics_prometheus, "~> 0.6"},
-      {:telemetry_metrics_prometheus_core, "~> 0.4"},
-      {:opentelemetry_phoenix, "~> 0.2"},
+      {:telemetry_metrics_prometheus, "~> 1.1"},
+      {:telemetry_metrics_prometheus_core, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 1.0-beta"},
       {:jason, "~> 1.2"},
       {:recon, "~> 2.5"}
     ]
