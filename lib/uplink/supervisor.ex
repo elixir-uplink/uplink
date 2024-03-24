@@ -80,7 +80,7 @@ defmodule Uplink.Supervisor do
       {:telemetry_poller,
        period: period,
        measurements: measurements,
-       name: :"#{for _ <- 1..16, into: "", do: <<Enum.random('0123456789abcdef')>>}"}
+       name: :"#{for _ <- 1..16, into: "", do: <<Enum.random(~c"0123456789abcdef")>>}"}
     end)
   end
 end
