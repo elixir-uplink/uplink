@@ -13,7 +13,7 @@ configurable drop-in to your application tree.
 ```elixir
 def deps do
   [
-    {:uplink, "~> 0.2"}
+    {:uplink, "~> 0.3"}
   ]
 end
 ```
@@ -69,4 +69,4 @@ not already covered.
 
 
 
-Copyright (c) 2021 Bryan Naegele
+Copyright (c) 2021-2024 Bryan Naegele
