@@ -1,13 +1,13 @@
 defmodule Uplink.MixProject do
   use Mix.Project
 
-  @version "0.2.0"
+  @version "0.3.0"
 
   def project do
     [
       app: :uplink,
       version: @version,
-      elixir: "~> 1.10",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
@@ -57,10 +57,10 @@ defmodule Uplink.MixProject do
 
   defp deps do
     [
-      {:dialyxir, "~> 1.1.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.25", only: [:dev, :docs]},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.31", only: [:dev, :docs]},
       {:telemetry, "~> 1.0"},
-      {:telemetry_metrics, "~> 0.6.1"},
+      {:telemetry_metrics, "~> 0.6 or ~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:telemetry_registry, "~> 0.3"}
     ]
