@@ -28,7 +28,7 @@ jobs:
       - uses: erlef/setup-beam@v1
         with:
           otp-version: '26.2.1'
-          elixir-version: '1.12.3'
+          elixir-version: '1.16.2'
           version-type: strict
       - run: mix format --check-formatted
       - run: mix format --check-formatted "monitors/**/*.ex"
