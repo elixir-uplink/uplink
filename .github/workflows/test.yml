@@ -14,21 +14,22 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Read file
         id: set-matrix
         run: |
-          matrixStringifiedObject="{\"otp_version\":[\"24.0.6\",\"23.3.4.7\",\"22.3.4.21\"],\"elixir_version\":[\"1.12.3\",\"1.11.4\"],\"rebar3_version\":[\"3.16.1\"],\"os\":[\"ubuntu-18.04\"],\"include\":[{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.10.4\",\"rebar3_version\":\"3.15.2\"},{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.11.4\",\"rebar3_version\":\"3.15.2\"}],\"exclude\":[{\"otp_version\":\"21.3.8.24\",\"elixir_version\":\"1.12.3\"}]}"
-          echo "::set-output name=matrix::$matrixStringifiedObject"
+          matrixStringifiedObject="$(jq -c . .github/elixir-test-matrix.json)"
+          echo "matrix=$matrixStringifiedObject" >> $GITHUB_OUTPUT
   format:
     needs: test-matrix
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: '24.1'
+          otp-version: '26.2.1'
           elixir-version: '1.12.3'
+          version-type: strict
       - run: mix format --check-formatted
       - run: mix format --check-formatted "monitors/**/*.ex"
       - run: mix format --check-formatted "examples/**/*.ex"
@@ -41,12 +42,13 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.test-matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp_version}}
           elixir-version: ${{matrix.elixir_version}}
           rebar3-version: ${{ matrix.rebar3_version }}
+          version-type: strict
       - run: mix deps.get
         name: Deps
       - run: mix test
@@ -63,7 +65,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.test-matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp_version}}
